@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace Infrastructure
 {
-    public sealed class UnitOfWork
+    public sealed class UnitOfWork : IDisposable
     {
         private readonly AppDbContext _context;
 
@@ -17,17 +17,21 @@ namespace Infrastructure
         public CategoryRepository CategoryRepository { get; }
         public ProjectRepository ProjectRepository { get; }
 
-        public UnitOfWork(AppDbContext context, IUserRepository userRepository, IProductRepository product)
+        public UnitOfWork(
+            AppDbContext context,
+            CategoryRepository categoryRepository,
+            ProjectRepository projectRepository,
+            AdminRepository adminRepository)
         {
             _context = context;
-            UserRepository = userRepository;
-            ProductRepository = product;
+            CategoryRepository = categoryRepository;
+            ProjectRepository = projectRepository;
+            AdminRepository = adminRepository;
         }
 
         public async Task BeginTransactionAsync()
         {
-            if (_transaction == null)
-                _transaction = await _context.Database.BeginTransactionAsync();
+            _transaction ??= await _context.Database.BeginTransactionAsync();
         }
 
         public async Task CommitTransactionAsync()
@@ -64,3 +68,4 @@ namespace Infrastructure
             await _transaction.RollbackAsync();
         }
     }
+}

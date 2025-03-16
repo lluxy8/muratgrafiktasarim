@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Application.Commands.Admin.Req
 {
-    public class DeleteAdmin
+    public class DeleteAdminRequest
     {
         public Guid Id { get; set; }
     }

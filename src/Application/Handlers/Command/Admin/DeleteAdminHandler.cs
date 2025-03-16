@@ -11,7 +11,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Application.Handlers
+namespace Application.Handlers.Command.Admin
 {
     public record DeleteAdminHandler : IRequestHandler<DeleteAdminCommand, IResult<DeleteAdminResult>>
     {
@@ -24,12 +24,11 @@ namespace Application.Handlers
         }
         public async Task<IResult<DeleteAdminResult>> Handle(DeleteAdminCommand request, CancellationToken cancellationToken)
         {
-            var admin = await _unitOfWork.AdminRepository.GetByIdAsync(request.Request.Id);
+            var admin = await _unitOfWork.AdminRepository.GetByIdAsync(request.Request.Id, cancellationToken);
             if(admin is null)
-                return Result<DeleteAdminResult>.Failure(null, "Admin not found.");
+                return Result<DeleteAdminResult>.Failure(null, "Admin bulunamadı.");
 
-            await _unitOfWork.AdminRepository.DeleteAsync(admin);
-
+            await _unitOfWork.AdminRepository.DeleteAsync(admin, cancellationToken);
             return Result<DeleteAdminResult>.Success(new DeleteAdminResult { IsDeleted = true });
         }
     }

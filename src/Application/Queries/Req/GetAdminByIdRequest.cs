@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Application.Queries.Req
 {
-    public class GetByIdRequest
+    public class GetAdminByIdRequest
     {
         public Guid Id { get; set; }
     }

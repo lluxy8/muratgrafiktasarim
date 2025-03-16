@@ -1,4 +1,5 @@
 ﻿using Application.Commands.Admin.Req;
+using Application.Commands.Admin.Res;
 using Core.Interfaces;
 using MediatR;
 using System;
@@ -9,5 +10,5 @@ using System.Threading.Tasks;
 
 namespace Application.Commands.Admin
 {
-    public record CreateAdminCommand(CreateAdmin Request) : IRequest<IResult<Guid>>;
+    public record CreateAdminCommand(CreateAdminRequest Request) : IRequest<IResult<CreateAdminResult>>;
 }

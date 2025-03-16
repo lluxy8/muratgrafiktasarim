@@ -11,7 +11,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Application.Handlers
+namespace Application.Handlers.Command.Admin
 {
     class UpdateAdminHandler : IRequestHandler<UpdateAdminCommand, IResult<UpdateAdminResult>>
     {
@@ -25,7 +25,7 @@ namespace Application.Handlers
         }
         public async Task<IResult<UpdateAdminResult>> Handle(UpdateAdminCommand request, CancellationToken cancellationToken)
         {
-            var admin = await _unitOfWork.AdminRepository.GetByIdAsync(request.Request.Id);
+            var admin = await _unitOfWork.AdminRepository.GetByIdAsync(request.Request.Id, cancellationToken);
             if(admin is null)
                 return Result<UpdateAdminResult>.Failure(null, "Admin bulunamadı.");
 
@@ -33,7 +33,7 @@ namespace Application.Handlers
             var updatedAdmin = _mapper.Map(request.Request, admin);
             updatedAdmin.Id = admin.Id;
 
-            await _unitOfWork.AdminRepository.UpdateAsync(updatedAdmin);
+            await _unitOfWork.AdminRepository.UpdateAsync(updatedAdmin, cancellationToken);
             return Result<UpdateAdminResult>.Success(new UpdateAdminResult { IsUpdated = true });
         }
     }

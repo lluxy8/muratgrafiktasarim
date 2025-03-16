@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Application.Commands.Admin.Req
 {
-    public class UpdateAdmin
+    public class UpdateAdminRequest
     {
         public Guid Id { get; set; }
         public required string Name { get; set; }

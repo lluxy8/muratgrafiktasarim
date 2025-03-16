@@ -7,11 +7,9 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Folder Include="Behaviors\" />
-    <Folder Include="Commands\" />
-    <Folder Include="Handlers\" />
+    <Folder Include="Commands\Category\" />
+    <Folder Include="Commands\Project\" />
     <Folder Include="Validators\" />
-    <Folder Include="Queries\" />
   </ItemGroup>
 
   <ItemGroup>
@@ -23,6 +21,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\Core\Core.csproj" />
+    <ProjectReference Include="..\Infrastructure\Infrastructure.csproj" />
   </ItemGroup>
 
 </Project>

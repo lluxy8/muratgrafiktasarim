@@ -1,10 +1,5 @@
 ﻿using Core.Interfaces;
 using Microsoft.EntityFrameworkCore;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Infrastructure.Repositories
 {
@@ -17,22 +12,22 @@ namespace Infrastructure.Repositories
             _context = context;
             _dbSet = _context.Set<T>();
         }
-        public async Task AddAsync(T entity) => await _dbSet.AddAsync(entity);
+        public async Task AddAsync(T entity, CancellationToken cancellation) => await _dbSet.AddAsync(entity);
 
-        public Task DeleteAsync(T entity)
+        public Task DeleteAsync(T entity, CancellationToken cancellation)
         {
             _dbSet.Remove(entity);
             return Task.CompletedTask;
         }
 
-        public async Task<T?> GetByIdAsync(Guid id) => await _dbSet.FindAsync(id);
+        public async Task<T?> GetByIdAsync(Guid id, CancellationToken cancellation) => await _dbSet.FindAsync(id);
 
-        public async Task<IReadOnlyList<T>> ListAllAsync() => await _dbSet.ToListAsync() ?? [];
+        public async Task<IEnumerable<T>> ListAllAsync(CancellationToken cancellation) => await _dbSet.ToListAsync() ?? [];
 
-        public Task UpdateAsync(T entity)
+        public Task UpdateAsync(T entity, CancellationToken cancellation)
         {
             _dbSet.Update(entity);
-            return Task.CompletedTask;  
+            return Task.CompletedTask;
         }
     }
 }

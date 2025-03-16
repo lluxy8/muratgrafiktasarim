@@ -8,6 +8,6 @@ namespace Application.Queries.Res
 {
     public class GetAllAdminsResult
     {
-        public required IEnumerable<GetByIdResult> Admins { get; set; }
+        public required IEnumerable<GetAdminByIdResult> Admins { get; set; }
     }
 }
