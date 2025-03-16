@@ -10,5 +10,5 @@ using System.Threading.Tasks;
 
 namespace Application.Queries.Admin
 {
-    public record GetAdminByIdQuery(GetAdminByIdRequest Request) : IRequest<IResult<GetAdminByIdResult>>;
+    public record GetAdminByIdQuery(GetAdminByIdRequest Request) : IRequest<IResult<GetAdminResult>>;
 }

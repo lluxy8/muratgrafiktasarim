@@ -14,7 +14,7 @@ namespace Application.Common.Mapping
         public MappingProfile()
         {
             // Admin Mappings
-            CreateMap<Admin, GetAdminByIdResult>();
+            CreateMap<Admin, GetAdminResult>();
             CreateMap<CreateAdminRequest, Admin>();
             CreateMap<UpdateAdminRequest, Admin>();
 

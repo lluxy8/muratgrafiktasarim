@@ -26,7 +26,7 @@ namespace Application.Handlers.Query.Admin
         public async Task<IResult<GetAllAdminsResult>> Handle(GetAllAdminsQuery request, CancellationToken cancellationToken)
         {
             var admins = await _unitOfWork.AdminRepository.ListAllAsync(cancellationToken);
-            var adminsMap = _mapper.Map<IEnumerable<Core.Entities.Admin>, IEnumerable<GetAdminByIdResult>>(admins);
+            var adminsMap = _mapper.Map<IEnumerable<Core.Entities.Admin>, IEnumerable<GetAdminResult>>(admins);
 
             return Result<GetAllAdminsResult>.Success(new GetAllAdminsResult { Admins = adminsMap });
         }

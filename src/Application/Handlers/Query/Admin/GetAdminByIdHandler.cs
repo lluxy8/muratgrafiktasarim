@@ -13,7 +13,7 @@ using System.Threading.Tasks;
 
 namespace Application.Handlers.Query.Admin
 {
-    public class GetAdminByIdHandler : IRequestHandler<GetAdminByIdQuery, IResult<GetAdminByIdResult>>
+    public class GetAdminByIdHandler : IRequestHandler<GetAdminByIdQuery, IResult<GetAdminResult>>
     {
         private readonly UnitOfWork _unitOfWork;
         private readonly IMapper _mapper;
@@ -23,14 +23,14 @@ namespace Application.Handlers.Query.Admin
             _unitOfWork = unitOfWork;
             _mapper = mapper;
         }
-        public async Task<IResult<GetAdminByIdResult>> Handle(GetAdminByIdQuery request, CancellationToken cancellationToken)
+        public async Task<IResult<GetAdminResult>> Handle(GetAdminByIdQuery request, CancellationToken cancellationToken)
         {
             var admin = await _unitOfWork.AdminRepository.GetByIdAsync(request.Request.Id, cancellationToken);
             if (admin is null)
-                return Result<GetAdminByIdResult>.Failure(null, "Admin bulunamadı.");
+                return Result<GetAdminResult>.Failure(null, "Admin bulunamadı.");
 
-            var adminMap = _mapper.Map<GetAdminByIdResult>(admin);
-            return Result<GetAdminByIdResult>.Success(adminMap);
+            var adminMap = _mapper.Map<GetAdminResult>(admin);
+            return Result<GetAdminResult>.Success(adminMap);
         }
     }
 }
