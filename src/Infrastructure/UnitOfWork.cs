@@ -8,64 +8,65 @@ using System.Threading.Tasks;
 
 namespace Infrastructure
 {
-    public sealed class UnitOfWork : IDisposable
+    public class UnitOfWork
     {
         private readonly AppDbContext _context;
+        private IDbContextTransaction? _transaction;
 
-        private IDbContextTransaction _transaction;
         public AdminRepository AdminRepository { get; }
         public CategoryRepository CategoryRepository { get; }
         public ProjectRepository ProjectRepository { get; }
 
-        public UnitOfWork(
-            AppDbContext context,
-            CategoryRepository categoryRepository,
-            ProjectRepository projectRepository,
-            AdminRepository adminRepository)
+        public UnitOfWork(AppDbContext context, AdminRepository adminRepository, CategoryRepository categoryRepository, ProjectRepository projectRepository)
         {
             _context = context;
+            AdminRepository = adminRepository;
             CategoryRepository = categoryRepository;
             ProjectRepository = projectRepository;
-            AdminRepository = adminRepository;
         }
 
         public async Task BeginTransactionAsync()
         {
-            _transaction ??= await _context.Database.BeginTransactionAsync();
+            _transaction = await _context.Database.BeginTransactionAsync();
         }
 
         public async Task CommitTransactionAsync()
         {
-            if (_transaction == null)
-                throw new InvalidOperationException("Transaction not started.");
-
             try
             {
                 await _context.SaveChangesAsync();
-                await _transaction.CommitAsync();
+                if (_transaction != null)
+                {
+                    await _transaction.CommitAsync();
+                }
             }
-            catch (Exception)
+            finally
             {
-                await RollbackTransactionAsync();
-                throw;
+                if (_transaction != null)
+                {
+                    await _transaction.DisposeAsync();
+                    _transaction = null;
+                }
             }
-
         }
-
-        public void Dispose()
-        {
-            _transaction?.Dispose();
-            _context.Dispose();
-        }
-
-        public async Task<int> SaveChangesAsync() => await _context.SaveChangesAsync();
 
         public async Task RollbackTransactionAsync()
         {
-            if (_transaction == null)
-                throw new InvalidOperationException("Transaction not started.");
-
-            await _transaction.RollbackAsync();
+            try
+            {
+                if (_transaction != null)
+                {
+                    await _transaction.RollbackAsync();
+                }
+            }
+            finally
+            {
+                if (_transaction != null)
+                {
+                    await _transaction.DisposeAsync();
+                    _transaction = null;
+                }
+            }
         }
     }
 }

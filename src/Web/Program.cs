@@ -1,5 +1,9 @@
+using Application.Behaviors;
 using Application.Common.Mapping;
+using Core.Interfaces;
 using Infrastructure;
+using Infrastructure.Repositories;
+using MediatR;
 using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -9,7 +13,12 @@ builder.Services.AddControllersWithViews();
 
 // DbContext
 builder.Services.AddDbContext<AppDbContext>(options =>
-    options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
+    options.UseSqlServer(builder.Configuration.GetConnectionString("DevConnection")));
+
+// Repositories
+builder.Services.AddScoped<AdminRepository>();
+builder.Services.AddScoped<CategoryRepository>();
+builder.Services.AddScoped<ProjectRepository>();
 
 // UnitOfWork
 builder.Services.AddScoped<UnitOfWork>();
@@ -17,6 +26,7 @@ builder.Services.AddScoped<UnitOfWork>();
 // MediatR
 builder.Services.AddMediatR(cfg => {
     cfg.RegisterServicesFromAssembly(typeof(Application.Commands.Admin.CreateAdminCommand).Assembly);
+    cfg.AddBehavior(typeof(IPipelineBehavior<,>), typeof(TransactionBehavior<,>));
 });
 
 // AutoMapper

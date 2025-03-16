@@ -1,6 +1,7 @@
 ﻿using Core.Interfaces;
 using Infrastructure;
 using MediatR;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,40 +10,39 @@ using System.Threading.Tasks;
 
 namespace Application.Behaviors
 {
-    public class TransactionBehavior<TRequest, TResponse> : IPipelineBehavior<TRequest, TResponse> where TRequest : notnull
+    public class TransactionBehavior<TRequest, TResponse> : IPipelineBehavior<TRequest, TResponse>
+        where TRequest : IRequest<TResponse>
     {
-        private readonly UnitOfWork _unitOfWork;
+        private readonly AppDbContext _context;
 
-        public TransactionBehavior(UnitOfWork unitOfWork)
+        public TransactionBehavior(AppDbContext context)
         {
-            _unitOfWork = unitOfWork;
+            _context = context;
         }
+
         public async Task<TResponse> Handle(TRequest request, RequestHandlerDelegate<TResponse> next, CancellationToken cancellationToken)
         {
-            await _unitOfWork.BeginTransactionAsync();
+            if (IsQuery(request))
+                return await next();
 
+            using var transaction = await _context.Database.BeginTransactionAsync(cancellationToken);
             try
             {
                 var response = await next();
-
-                if (typeof(TRequest).Name.EndsWith("Command"))
-                {
-                    if (response is IResult result)
-                    {
-                        if (result.IsSuccess)
-                            await _unitOfWork.CommitTransactionAsync();
-                        else
-                            await _unitOfWork.RollbackTransactionAsync();
-                    }
-                }
-
+                await _context.SaveChangesAsync(cancellationToken);
+                await transaction.CommitAsync(cancellationToken);
                 return response;
             }
-            catch (Exception)
+            catch
             {
-                await _unitOfWork.RollbackTransactionAsync();
+                await transaction.RollbackAsync(cancellationToken);
                 throw;
             }
+        }
+
+        private static bool IsQuery(TRequest request)
+        {
+            return request.GetType().Name.EndsWith("Query");
         }
     }
 }
