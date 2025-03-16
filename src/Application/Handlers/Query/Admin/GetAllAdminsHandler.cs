@@ -1,5 +1,5 @@
-﻿using Application.Queries;
-using Application.Queries.Res;
+﻿using Application.Queries.Admin;
+using Application.Queries.Admin.Res;
 using AutoMapper;
 using Core.Interfaces;
 using Core.Models;

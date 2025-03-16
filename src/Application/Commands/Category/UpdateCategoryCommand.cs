@@ -4,10 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Application.Queries.Req
+namespace Application.Commands.Category
 {
-    public class GetAdminByIdRequest
+    class UpdateCatrgoryCommand
     {
-        public Guid Id { get; set; }
     }
 }

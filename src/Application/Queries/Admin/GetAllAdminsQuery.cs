@@ -1,4 +1,4 @@
-﻿using Application.Queries.Res;
+﻿using Application.Queries.Admin.Res;
 using Core.Interfaces;
 using MediatR;
 using System;
@@ -7,7 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Application.Queries
+namespace Application.Queries.Admin
 {
     public record GetAllAdminsQuery() : IRequest<IResult<GetAllAdminsResult>>;
 }

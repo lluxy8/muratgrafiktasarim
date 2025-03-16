@@ -1,5 +1,5 @@
-﻿using Application.Queries;
-using Application.Queries.Res;
+﻿using Application.Queries.Admin;
+using Application.Queries.Admin.Res;
 using AutoMapper;
 using Core.Interfaces;
 using Core.Models;
@@ -28,8 +28,8 @@ namespace Application.Handlers.Query.Admin
             var admin = await _unitOfWork.AdminRepository.GetByIdAsync(request.Request.Id, cancellationToken);
             if (admin is null)
                 return Result<GetAdminByIdResult>.Failure(null, "Admin bulunamadı.");
-            var adminMap = _mapper.Map<GetAdminByIdResult>(admin);
 
+            var adminMap = _mapper.Map<GetAdminByIdResult>(admin);
             return Result<GetAdminByIdResult>.Success(adminMap);
         }
     }

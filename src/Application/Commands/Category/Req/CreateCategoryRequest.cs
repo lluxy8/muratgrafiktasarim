@@ -4,11 +4,10 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Application.Queries.Res
+namespace Application.Commands.Category.Req
 {
-    public class GetAdminByIdResult
+    public class CreateCategoryRequest
     {
-        public Guid Id { get; set; }
         public required string Name { get; set; }
     }
 }
