@@ -12,7 +12,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Application.Handlers
+namespace Application.Handlers.Command.Admin
 {
     public class CreateAdminHandler : IRequestHandler<CreateAdminCommand, IResult<CreateAdminResult>>
     {
@@ -26,9 +26,9 @@ namespace Application.Handlers
         public async Task<IResult<CreateAdminResult>> Handle(CreateAdminCommand request, CancellationToken cancellationToken)
         {
             var id = Guid.NewGuid();
-            var admin = _mapper.Map<Admin>(request.Request);
+            var admin = _mapper.Map<Core.Entities.Admin>(request.Request);
             admin.Id = id;
-            await _unitOfWork.AdminRepository.AddAsync(admin);
+            await _unitOfWork.AdminRepository.AddAsync(admin, cancellationToken);
             return Result<CreateAdminResult>.Success(new CreateAdminResult { Id = id });
         }
     }

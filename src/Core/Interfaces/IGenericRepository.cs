@@ -8,10 +8,10 @@ namespace Core.Interfaces
 {
     public interface IGenericRepository<T> where T : class
     {
-        Task<T?> GetByIdAsync(Guid id);
-        Task<IReadOnlyList<T>> ListAllAsync();
-        Task AddAsync(T entity);
-        Task UpdateAsync(T entity);
-        Task DeleteAsync(T entity);
+        Task<T?> GetByIdAsync(Guid id, CancellationToken cancellation);
+        Task<IEnumerable<T>> ListAllAsync(CancellationToken cancellation);
+        Task AddAsync(T entity, CancellationToken cancellation);
+        Task UpdateAsync(T entity, CancellationToken cancellation);
+        Task DeleteAsync(T entity, CancellationToken cancellation);
     }
 }
