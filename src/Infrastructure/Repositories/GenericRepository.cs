@@ -1,5 +1,6 @@
 ﻿using Core.Interfaces;
 using Microsoft.EntityFrameworkCore;
+using System.Linq.Expressions;
 
 namespace Infrastructure.Repositories
 {
@@ -28,6 +29,16 @@ namespace Infrastructure.Repositories
         {
             _dbSet.Update(entity);
             return Task.CompletedTask;
+        }
+
+        public async Task<T?> GetByConditionAsync(Expression<Func<T, bool>> predicate, CancellationToken cancellationToken)
+        {
+            return await _dbSet.FirstOrDefaultAsync(predicate, cancellationToken);
+        }
+
+        public async Task<IEnumerable<T>> ListByConditionAsync(Expression<Func<T, bool>> predicate, CancellationToken cancellationToken)
+        {
+            return await _dbSet.Where(predicate).ToListAsync(cancellationToken);
         }
     }
 }
