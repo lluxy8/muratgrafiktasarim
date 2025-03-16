@@ -7,8 +7,8 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Folder Include="Commands\Category\" />
-    <Folder Include="Commands\Project\" />
+    <Folder Include="Commands\Project\Res\" />
+    <Folder Include="Commands\Project\Req\" />
     <Folder Include="Validators\" />
   </ItemGroup>
 

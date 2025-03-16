@@ -8,6 +8,6 @@ namespace Application.Queries.Category.Res
 {
     public class GetAllCategoriesResult
     {
-        public IEnumerable<GetCategoryByIdResult> MyProperty { get; set; } = [];
+        public IEnumerable<GetCategoryByIdResult> Categories { get; set; } = [];
     }
 }

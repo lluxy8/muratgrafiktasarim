@@ -12,5 +12,5 @@ using System.Threading.Tasks;
 
 namespace Application.Commands.Category
 {
-    public record CreateCategoryCommand(CreateAdminRequest Request) : IRequest<IResult<CreateAdminResult>>;
+    public record CreateCategoryCommand(CreateCategoryRequest Request) : IRequest<IResult<CreateCategoryResult>>;
 }
