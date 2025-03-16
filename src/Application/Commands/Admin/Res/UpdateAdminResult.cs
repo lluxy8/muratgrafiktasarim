@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Application.Commands.Admin.Res
 {
-    class UpdateAdminResult
+    public class UpdateAdminResult
     {
         public bool IsUpdated { get; set; }
     }

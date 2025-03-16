@@ -1,5 +1,6 @@
 ﻿using Application.Commands.Admin;
 using Application.Commands.Admin.Res;
+using Application.Common.Security;
 using AutoMapper;
 using Core.Entities;
 using Core.Interfaces;
@@ -28,6 +29,10 @@ namespace Application.Handlers.Command.Admin
             var id = Guid.NewGuid();
             var admin = _mapper.Map<Core.Entities.Admin>(request.Request);
             admin.Id = id;
+            
+            // Şifreyi hashle
+            admin.Password = PasswordHasher.HashPassword(request.Request.Password);
+
             await _unitOfWork.AdminRepository.AddAsync(admin, cancellationToken);
             return Result<CreateAdminResult>.Success(new CreateAdminResult { Id = id });
         }

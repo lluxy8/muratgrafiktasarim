@@ -1,5 +1,6 @@
 ﻿using Application.Commands.Admin;
 using Application.Commands.Admin.Res;
+using Application.Common.Security;
 using AutoMapper;
 using Core.Interfaces;
 using Core.Models;
@@ -13,7 +14,7 @@ using System.Threading.Tasks;
 
 namespace Application.Handlers.Command.Admin
 {
-    class UpdateAdminHandler : IRequestHandler<UpdateAdminCommand, IResult<UpdateAdminResult>>
+    public class UpdateAdminHandler : IRequestHandler<UpdateAdminCommand, IResult<UpdateAdminResult>>
     {
         private readonly UnitOfWork _unitOfWork;
         private readonly IMapper _mapper;
@@ -23,17 +24,23 @@ namespace Application.Handlers.Command.Admin
             _unitOfWork = unitOfWork;
             _mapper = mapper;
         }
+
         public async Task<IResult<UpdateAdminResult>> Handle(UpdateAdminCommand request, CancellationToken cancellationToken)
         {
             var admin = await _unitOfWork.AdminRepository.GetByIdAsync(request.Request.Id, cancellationToken);
-            if(admin is null)
-                return Result<UpdateAdminResult>.Failure(null, "Admin bulunamadı.");
-
+            if (admin is null)
+                return Result<UpdateAdminResult>.Failure(null, "Admin bulunamadı");
 
             var updatedAdmin = _mapper.Map(request.Request, admin);
             updatedAdmin.Id = admin.Id;
 
+            if (!string.IsNullOrEmpty(request.Request.Password))
+            {
+                updatedAdmin.Password = PasswordHasher.HashPassword(request.Request.Password);
+            }
+
             await _unitOfWork.AdminRepository.UpdateAsync(updatedAdmin, cancellationToken);
+
             return Result<UpdateAdminResult>.Success(new UpdateAdminResult { IsUpdated = true });
         }
     }
