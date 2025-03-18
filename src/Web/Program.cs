@@ -5,6 +5,9 @@ using Infrastructure;
 using Infrastructure.Repositories;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
+using FluentValidation;
+using FluentValidation.AspNetCore;
+using Application.Validators;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -28,6 +31,10 @@ builder.Services.AddMediatR(cfg => {
     cfg.RegisterServicesFromAssembly(typeof(Application.Commands.Admin.CreateAdminCommand).Assembly);
     cfg.AddBehavior(typeof(IPipelineBehavior<,>), typeof(TransactionBehavior<,>));
 });
+
+// FluentValidation
+builder.Services.AddFluentValidationAutoValidation();
+builder.Services.AddValidatorsFromAssemblyContaining<AdminValidator>();
 
 // AutoMapper
 builder.Services.AddAutoMapper(typeof(MappingProfile));

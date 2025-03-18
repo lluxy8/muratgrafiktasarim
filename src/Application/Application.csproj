@@ -9,7 +9,6 @@
   <ItemGroup>
     <Folder Include="Commands\Project\Res\" />
     <Folder Include="Commands\Project\Req\" />
-    <Folder Include="Validators\" />
   </ItemGroup>
 
   <ItemGroup>
