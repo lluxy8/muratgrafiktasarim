@@ -30,8 +30,11 @@ namespace Application.Handlers.Command.Project
                 return Result<UpdateProjectResult>.Failure(null, "Project not found.");
 
             var updatedProject = _mapper.Map(request.Request, project);
+            updatedProject.Id = project.Id;
 
             await _unitOfWork.ProjectRepository.UpdateAsync(updatedProject, cancellationToken);
+
+            return Result<UpdateProjectResult>.Success(new UpdateProjectResult { IsUpdated = true });
         }
     }
 }
