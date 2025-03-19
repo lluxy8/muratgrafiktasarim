@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Core.Entities
 {
-    public class WebProfiles
+    public class WebProfile
     {
         public Guid Id { get; set; }
         public required string Name { get; set; }

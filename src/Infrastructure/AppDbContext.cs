@@ -18,6 +18,7 @@ namespace Infrastructure
         public DbSet<Admin> Admins { get; set; }
         public DbSet<Category> Categories { get; set; }
         public DbSet<Project> Projects { get; set; }
+        public DbSet<WebProfile> WebProfiles { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
