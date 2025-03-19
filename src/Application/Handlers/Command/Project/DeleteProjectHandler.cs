@@ -25,6 +25,9 @@ namespace Application.Handlers.Command.Project
 
             await _unitOfWork.ProjectRepository.DeleteAsync(project, cancellationToken);
 
+            if(File.Exists(project.ImageUrl))
+                File.Delete(project.ImageUrl);
+
             return Result<DeleteProjectResult>.Success(new DeleteProjectResult { IsDeleted = true });
         }
     }
