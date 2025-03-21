@@ -28,7 +28,7 @@ namespace Application.Handlers.Command.Project
 
             if (imageUrl is null)
             {
-                return Result<CreateProjectResult>.Failure(null, "Failed to upload image");
+                return Result<CreateProjectResult>.Failure(null, "Dosya yükleme baþarýsýz");
             }
 
             var id = Guid.NewGuid();

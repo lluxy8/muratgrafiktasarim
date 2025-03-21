@@ -21,7 +21,7 @@ namespace Application.Handlers.Command.Project
         {
             var project = await _unitOfWork.ProjectRepository.GetByIdAsync(request.Request.Id, cancellationToken);
             if (project is null)
-                return Result<DeleteProjectResult>.Failure(null, "Project not found.");
+                return Result<DeleteProjectResult>.Failure(null, "Proje bulunamadý.");
 
             await _unitOfWork.ProjectRepository.DeleteAsync(project, cancellationToken);
 
