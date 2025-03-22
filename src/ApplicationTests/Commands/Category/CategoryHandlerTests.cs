@@ -53,7 +53,6 @@ namespace ApplicationTests.Commands.Category
         {
             // Arrange
             var expectedResult = Result<GetCategoryByIdResult>.Success(new GetCategoryByIdResult());
-            var id = new Guid("50ecf85c-f71e-421d-be87-e153d5937f9a");
 
             _mediatorMock
                 .Setup(m => m.Send(It.IsAny<GetCategoryByIdQuery>(), It.IsAny<CancellationToken>()))
@@ -62,7 +61,7 @@ namespace ApplicationTests.Commands.Category
             var mediator = _mediatorMock.Object;
 
             // Act
-            var query = new GetCategoryByIdQuery(new GetCategoryByIdRequest { Id = id });
+            var query = new GetCategoryByIdQuery(new GetCategoryByIdRequest { Id = Guid.NewGuid() });
             var result = await mediator.Send(query, default);
 
             // Assert
@@ -75,7 +74,6 @@ namespace ApplicationTests.Commands.Category
         {
             // Arrange
             var expectedResult = Result<DeleteCategoryResult>.Success(new DeleteCategoryResult());
-            var id = new Guid("50ecf85c-f71e-421d-be87-e153d5937f9a");
 
             _mediatorMock
                 .Setup(m => m.Send(It.IsAny<DeleteCategoryCommand>(), It.IsAny<CancellationToken>()))
@@ -84,7 +82,7 @@ namespace ApplicationTests.Commands.Category
             var mediator = _mediatorMock.Object;
 
             // Act
-            var command = new DeleteCategoryCommand(new DeleteCategoryRequest { Id = id });
+            var command = new DeleteCategoryCommand(new DeleteCategoryRequest { Id = Guid.NewGuid() });
             var result = await mediator.Send(command, default);
 
             // Assert
@@ -98,7 +96,7 @@ namespace ApplicationTests.Commands.Category
             // Arrange
             var request = new UpdateCategoryRequest
             {
-                Id = new Guid("50ecf85c-f71e-421d-be87-e153d5937f9a"),
+                Id = Guid.NewGuid(),
                 Name = "Updated Category"
             };
 

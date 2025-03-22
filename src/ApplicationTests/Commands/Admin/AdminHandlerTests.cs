@@ -55,8 +55,6 @@ namespace ApplicationTests.Commands.Admin
             // Arrange
             var expectedResult = Result<GetAdminResult>.Success(new GetAdminResult());
 
-            var id = new Guid("50ecf85c-f71e-421d-be87-e153d5937f9a");
-
             _mediatorMock
                 .Setup(m => m.Send(It.IsAny<GetAdminByIdQuery>(), It.IsAny<CancellationToken>()))
                 .ReturnsAsync(expectedResult);
@@ -64,7 +62,7 @@ namespace ApplicationTests.Commands.Admin
             var mediator = _mediatorMock.Object;
 
             // Act
-            var query = new GetAdminByIdQuery(new GetAdminByIdRequest { Id = id });
+            var query = new GetAdminByIdQuery(new GetAdminByIdRequest { Id = Guid.NewGuid() });
             var result = await mediator.Send(query, default);
 
             // Assert
@@ -77,14 +75,13 @@ namespace ApplicationTests.Commands.Admin
         {
             // Arrange
             var expectedResult = Result<DeleteAdminResult>.Success(new DeleteAdminResult());
-            var id = new Guid("50ecf85c-f71e-421d-be87-e153d5937f9a");
             _mediatorMock
                 .Setup(m => m.Send(It.IsAny<DeleteAdminCommand>(), It.IsAny<CancellationToken>()))
                 .ReturnsAsync(expectedResult);
             var mediator = _mediatorMock.Object;
 
             // Act
-            var command = new DeleteAdminCommand(new DeleteAdminRequest { Id = id });
+            var command = new DeleteAdminCommand(new DeleteAdminRequest { Id = Guid.NewGuid() });
             var result = await mediator.Send(command, default);
 
             // Assert
@@ -98,7 +95,7 @@ namespace ApplicationTests.Commands.Admin
             // Arrange
             var request = new UpdateAdminRequest
             {
-                Id = new Guid("50ecf85c-f71e-421d-be87-e153d5937f9a"),
+                Id = Guid.NewGuid(),
                 Name = "Admin123",
                 Password = "1235@asDasdfasdasd",
             };

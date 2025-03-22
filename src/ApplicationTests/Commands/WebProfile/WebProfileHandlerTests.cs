@@ -97,7 +97,6 @@ namespace ApplicationTests.Commands.WebProfile
         {
             // Arrange
             var expectedResult = Result<GetWebProfileResult>.Success(new GetWebProfileResult());
-            var id = new Guid("50ecf85c-f71e-421d-be87-e153d5937f9a");
 
             _mediatorMock
                 .Setup(m => m.Send(It.IsAny<GetWebProfileByIdQuery>(), It.IsAny<CancellationToken>()))
@@ -106,7 +105,7 @@ namespace ApplicationTests.Commands.WebProfile
             var mediator = _mediatorMock.Object;
 
             // Act
-            var query = new GetWebProfileByIdQuery(new GetWebProfileByIdRequest { Id = id });
+            var query = new GetWebProfileByIdQuery(new GetWebProfileByIdRequest { Id = Guid.NewGuid() });
             var result = await mediator.Send(query, default);
 
             // Assert
@@ -119,7 +118,6 @@ namespace ApplicationTests.Commands.WebProfile
         {
             // Arrange
             var expectedResult = Result<DeleteWebProfileResult>.Success(new DeleteWebProfileResult());
-            var id = new Guid("50ecf85c-f71e-421d-be87-e153d5937f9a");
 
             _mediatorMock
                 .Setup(m => m.Send(It.IsAny<DeleteWebProfileCommand>(), It.IsAny<CancellationToken>()))
@@ -128,7 +126,7 @@ namespace ApplicationTests.Commands.WebProfile
             var mediator = _mediatorMock.Object;
 
             // Act
-            var command = new DeleteWebProfileCommand(new DeleteWebProfileRequest { Id = id });
+            var command = new DeleteWebProfileCommand(new DeleteWebProfileRequest { Id = Guid.NewGuid() });
             var result = await mediator.Send(command, default);
 
             // Assert
@@ -142,7 +140,7 @@ namespace ApplicationTests.Commands.WebProfile
             // Arrange
             var request = new UpdateWebProfileRequest
             {
-                Id = new Guid("50ecf85c-f71e-421d-be87-e153d5937f9a"),
+                Id = Guid.NewGuid(),
                 Name = "Updated Profile",
                 LogoUrl = "https://example.com/updated-logo.png",
                 FaviconUrl = "https://example.com/updated-favicon.ico",
