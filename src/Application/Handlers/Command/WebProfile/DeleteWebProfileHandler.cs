@@ -20,14 +20,15 @@ namespace Application.Handlers.Command.WebProfile
         {
             _unitOfWork = unitOfWork;
         }
-        public async Task<IResult<DeleteWebProfileResult>> IRequestHandler<DeleteWebProfileCommand, IResult<DeleteWebProfileResult>>.Handle(DeleteWebProfileCommand request, CancellationToken cancellationToken)
+
+        public async Task<IResult<DeleteWebProfileResult>> Handle(DeleteWebProfileCommand request, CancellationToken cancellationToken)
         {
             var webProfile = await _unitOfWork.WebProfileRepository.GetByIdAsync(request.Request.Id, cancellationToken);
-            if(webProfile is null)
-                return Result<DeleteWebProfileResult>.Failure(null, "Web Profile bulunamadı");
+            if (webProfile is null)
+                return Result<DeleteWebProfileResult>.Failure(null, "Web Profile not found");
 
             await _unitOfWork.WebProfileRepository.DeleteAsync(webProfile, cancellationToken);
-
+            return Result<DeleteWebProfileResult>.Success(new DeleteWebProfileResult { IsDeleted = true });
         }
     }
 }

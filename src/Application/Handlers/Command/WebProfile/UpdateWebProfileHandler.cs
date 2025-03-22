@@ -26,7 +26,7 @@ namespace Application.Handlers.Command.WebProfile
         {
             var webProfile = await _unitOfWork.WebProfileRepository.GetByIdAsync(request.Request.Id, cancellationToken);
             if (webProfile is null)
-                return Result<UpdateWebProfileResult>.Failure(null, "WebProfile not fund");
+                return Result<UpdateWebProfileResult>.Failure(null, "Web Profile bulunamadı");
 
             var updatedWebProfile = _mapper.Map(request.Request, webProfile);
             updatedWebProfile.Id = webProfile.Id;

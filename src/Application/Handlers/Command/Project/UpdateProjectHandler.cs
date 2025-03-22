@@ -27,7 +27,7 @@ namespace Application.Handlers.Command.Project
         {
             var project = await _unitOfWork.ProjectRepository.GetByIdAsync(request.Request.Id, cancellationToken);
             if(project is null)
-                return Result<UpdateProjectResult>.Failure(null, "Project bulunamadı");
+                return Result<UpdateProjectResult>.Failure(null, "Proje bulunamadı.");
 
             var updatedProject = _mapper.Map(request.Request, project);
             updatedProject.Id = project.Id;

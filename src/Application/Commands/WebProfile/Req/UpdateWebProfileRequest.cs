@@ -20,6 +20,6 @@ namespace Application.Commands.WebProfile.Req
         public IEnumerable<Carousel> Carousels { get; set; } = [];
         public IEnumerable<ProjectForIndex> ProjectsForIndex { get; set; } = [];
         public IEnumerable<FooterLink> FooterLinks { get; set; } = [];
-        public IEnumerable<NavbarLink> NavbarLinks { get; set; } = []
+        public IEnumerable<NavbarLink> NavbarLinks { get; set; } = [];
     }
 }

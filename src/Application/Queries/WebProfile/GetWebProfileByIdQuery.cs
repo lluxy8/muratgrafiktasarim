@@ -10,5 +10,5 @@ using System.Threading.Tasks;
 
 namespace Application.Queries.WebProfile
 {
-    public record GetWebProfileByIdQuery(GetWebProfileByIdRequest Request) : IRequest<IResult<GetWebProfileByIdResult>>;
+    public record GetWebProfileByIdQuery(GetWebProfileByIdRequest Request) : IRequest<IResult<GetWebProfileResult>>;
 }

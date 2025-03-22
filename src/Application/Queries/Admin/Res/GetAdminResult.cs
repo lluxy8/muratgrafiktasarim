@@ -9,6 +9,6 @@ namespace Application.Queries.Admin.Res
     public class GetAdminResult
     {
         public Guid Id { get; set; }
-        public required string Name { get; set; }
+        public string Name { get; set; }
     }
 }

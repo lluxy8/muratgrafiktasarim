@@ -9,5 +9,5 @@ using System.Threading.Tasks;
 
 namespace Application.Queries.WebProfile
 {
-    public record GetAllWebProfilesQuery : IRequest<IResult<IEnumerable<GetWebProfileByIdResult>>>;
+    public record GetAllWebProfilesQuery : IRequest<IResult<IEnumerable<GetWebProfileResult>>>;
 }

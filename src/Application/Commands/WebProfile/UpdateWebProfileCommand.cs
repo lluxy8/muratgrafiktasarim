@@ -10,5 +10,5 @@ using System.Threading.Tasks;
 
 namespace Application.Commands.WebProfile
 {
-    public record UpdateWebProfileCommand(DeleteWebProfileRequest Request) : IRequest<IResult<DeleteWebProfileResult>>;
+    public record UpdateWebProfileCommand(UpdateWebProfileRequest Request) : IRequest<IResult<UpdateWebProfileResult>>;
 }

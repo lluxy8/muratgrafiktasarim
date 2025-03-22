@@ -16,13 +16,20 @@ namespace Infrastructure
         public AdminRepository AdminRepository { get; }
         public CategoryRepository CategoryRepository { get; }
         public ProjectRepository ProjectRepository { get; }
+        public WebProfileRepository WebProfileRepository { get; }
 
-        public UnitOfWork(AppDbContext context, AdminRepository adminRepository, CategoryRepository categoryRepository, ProjectRepository projectRepository)
+        public UnitOfWork(
+            AppDbContext context, 
+            AdminRepository adminRepository, 
+            CategoryRepository categoryRepository, 
+            ProjectRepository projectRepository,
+            WebProfileRepository webProfileRepository)
         {
             _context = context;
             AdminRepository = adminRepository;
             CategoryRepository = categoryRepository;
             ProjectRepository = projectRepository;
+            WebProfileRepository = webProfileRepository;
         }
 
         public async Task BeginTransactionAsync()
