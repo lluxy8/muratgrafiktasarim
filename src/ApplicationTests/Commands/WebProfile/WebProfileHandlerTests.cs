@@ -39,40 +39,40 @@ namespace ApplicationTests.Commands.WebProfile
                     SecondaryColor = "#00FF00",
                     TertiaryColor = "#0000FF"
                 },
-                Carousels = new[]
-                {
+                Carousels =
+                [
                     new Core.Entities.Carousel
                     {
                         Title = "Test Carousel",
                         Text = "Test Text",
                         Image = "https://example.com/carousel.jpg"
                     }
-                },
-                ProjectsForIndex = new[]
-                {
+                ],
+                ProjectsForIndex =
+                [
                     new Core.Entities.ProjectForIndex
                     {
                         Name = "Test Project",
                         Image = "https://example.com/project.jpg",
                         Url = "https://example.com/project"
                     }
-                },
-                FooterLinks = new[]
-                {
+                ],
+                FooterLinks =
+                [
                     new Core.Entities.FooterLink
                     {
                         Text = "Test Footer Link",
                         Url = "https://example.com/footer"
                     }
-                },
-                NavbarLinks = new[]
-                {
+                ],
+                NavbarLinks =
+                [
                     new Core.Entities.NavbarLink
                     {
                         Text = "Test Navbar Link",
                         Url = "https://example.com/navbar"
                     }
-                }
+                ]
             };
 
             var expectedResult = Result<CreateWebProfileResult>.Success(new CreateWebProfileResult());
